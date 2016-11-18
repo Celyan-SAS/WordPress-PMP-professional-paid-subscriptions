@@ -2,12 +2,11 @@
 /**
  * 
  */
-
 class Ydcomptepro {
   
   public function __construct() {
     
-    //IT'S FOR ALERTS USERS
+    //IT'S FOR ALERTS USERS////////////
     //to save alerts for user
     /** include script and css files * */    
     add_action('wp_enqueue_scripts', array($this, 'alertsuser_scripts'));
@@ -23,32 +22,95 @@ class Ydcomptepro {
     //get alerts
     add_action('transition_post_status', array($this,'post_published_alertsender'), 10, 3 );
     
-    //PRO CODE
+    //PRO CODE/////////////////
     add_action('wp_enqueue_scripts', array($this, 'subuser_scripts'));
     
-    add_action( 'profile_update', array($this,'procode_profile_update'), 10, 2 );
+    //special hook only for promembership cancel master account
+    add_filter('pre_post_update', array($this, 'do_pre_save_procode_paidmembershippro'), 10, 2);
+    
+    //save code generated automaticly and paidmembership pro new user
+    add_filter('acf/save_post', array($this, 'do_pre_save_procode_admin'), 10, 1); 
     
     add_action('wp_ajax_deletesubuser', array($this, 'deletesubuser'));
     add_action('wp_ajax_nopriv_deletesubuser', array($this, 'deletesubuser'));
+    
+    //deal with the post
+    add_action( 'init', array($this,'process_post_procode') );    
   }
   
   //PRO CODE/////////////////////////////////////////////////////////////////////////////
-  public function procode_profile_update( $user_id, $old_user_data ) {
+  public function process_post_procode() {
+    if(isset($_POST['code_user'])):
+      //test if the code 
+      $comptepromodel_o = new Ydcomptepromodel();
+      $userMoralFound = $comptepromodel_o->getMoralePersoneByCode($_POST['code_user']);
+      if(isset($userMoralFound->ID)):
+        
+        global $erroremessagecomptepro;
+        //do not save if to much users attached to it
+        $listPeople = $comptepromodel_o->getAllUsersSubAccounts($userMoralFound->ID);
+        $nbrSubUSers = get_field('nombre_de_sub_comptes',$userMoralFound->ID);
+        if(count($listPeople)>=$nbrSubUSers):
+          $erroremessagecomptepro = "tomuchusers";
+          return;
+        endif;
+                
+        //pass user as paid membership pro
+        $user_id = get_current_user_id();
+        pmpro_changeMembershipLevel(3,$user_id);
+        //need to save the id of morale account
+        update_user_meta( $user_id, 'link_id_morale', $userMoralFound->ID);
+      endif;
+
+    endif;
+  }
+
+  public function do_pre_save_procode_paidmembershippro($post_id, $post_data){
+    //bail if it's not an procode
+    if (get_post_type($post_id) !== 'client_pro') :
+      return;
+    endif;
     
-    //if procodepaye ok && code_generated is empty
-    $paye = get_user_meta( $user_id, 'procodepaye',true);    
-    $codegenerated = get_user_meta( $user_id, 'code_generated',true);
+    //pass old user to cancel paid membership pro
+    //var_dump($post_id);
+    $idmasteraccount = get_post_meta( $post_id, 'master_account',true);
+    //var_dump($idmasteraccount);
+    if($idmasteraccount && $idmasteraccount!=0):
+      pmpro_changeMembershipLevel(3,$idmasteraccount);
+    endif;
+  }
+  
+  public function do_pre_save_procode_admin($post_id){
+    //bail if it's not an procode
+    if (get_post_type($post_id) !== 'client_pro') :
+      return;
+    endif;
+
+    if (function_exists('w3tc_objectcache_flush')):
+      w3tc_objectcache_flush();
+    endif;
+    
+    //if a master user is choosen => pass user to paid membership pro
+    $idmasteraccount = get_post_meta( $post_id, 'master_account',true);
+    if($idmasteraccount && $idmasteraccount!=0):
+      pmpro_changeMembershipLevel(3,$idmasteraccount);
+    endif;
+    
+//    if procodepaye ok && code_generated is empty
+    $paye = get_post_meta( $post_id, 'procodepaye',true);
+    $codegenerated = get_post_meta( $post_id, 'code_generated',true);
     
     if($paye && !$codegenerated):
-      $current_user = wp_get_current_user();
-      $codegenerated = md5($current_user->user_login.time());
-      update_field('code_generated',$codegenerated,'user_'.$user_id);
+      $name = get_the_title($post_id);
+      $codegenerated = md5($name.time());
+      update_field('code_generated',$codegenerated,$post_id);
     endif;
   }
   
   public function deletesubuser(){
     header( "Content-Type: application/json; charset=utf-8" );
     
+    pmpro_changeMembershipLevel(0,$_POST['iduser']);
     update_user_meta( $_POST['iduser'], 'link_id_morale', 0);
     
     echo json_encode(true);
