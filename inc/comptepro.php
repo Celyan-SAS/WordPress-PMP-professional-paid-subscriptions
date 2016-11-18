@@ -114,12 +114,12 @@ class Ydcomptepro {
     update_user_meta( $_POST['iduser'], 'link_id_morale', 0);
     
     //regenerate a new code when a user is kicked
-    $newcode = "";
+    $codegenerated = "";
     $name = get_the_title($_POST['idproaccount']);
     $codegenerated = md5($name.time());
-    update_field('code_generated',$codegenerated,$_POST['idproaccount']);
+    $test = update_post_meta($_POST['idproaccount'], 'code_generated', $codegenerated);
     
-    echo json_encode($newcode);
+    echo json_encode($codegenerated);
     wp_die();
   }
   
