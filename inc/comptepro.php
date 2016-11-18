@@ -113,7 +113,13 @@ class Ydcomptepro {
     pmpro_changeMembershipLevel(0,$_POST['iduser']);
     update_user_meta( $_POST['iduser'], 'link_id_morale', 0);
     
-    echo json_encode(true);
+    //regenerate a new code when a user is kicked
+    $newcode = "";
+    $name = get_the_title($_POST['idproaccount']);
+    $codegenerated = md5($name.time());
+    update_field('code_generated',$codegenerated,$_POST['idproaccount']);
+    
+    echo json_encode($newcode);
     wp_die();
   }
   
