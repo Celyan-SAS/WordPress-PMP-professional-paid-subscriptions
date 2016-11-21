@@ -76,7 +76,7 @@ class Ydcomptepro {
     $idmasteraccount = get_post_meta( $post_id, 'master_account',true);
     //var_dump($idmasteraccount);
     if($idmasteraccount && $idmasteraccount!=0):
-      pmpro_changeMembershipLevel(3,$idmasteraccount);
+      pmpro_changeMembershipLevel(0,$idmasteraccount);
     endif;
   }
   
@@ -150,7 +150,7 @@ class Ydcomptepro {
       return;
     }
     
-    if (get_post_type($post_id) !== 'evenement' && get_post_type($post_id) !== 'post') :
+    if (get_post_type($post->ID) !== 'evenement' && get_post_type($post->ID) !== 'post') :
       return;
     endif;
         
@@ -203,7 +203,12 @@ class Ydcomptepro {
     $listUsersEmails = array();
     if ( ! empty( $user_query->results ) ) :
       foreach ( $user_query->results as $user ):
-        $listUsersEmails[] = $user->user_email;
+      
+        //test if user is member
+        $userlevel = pmpro_getMembershipLevelForUser($user->ID);
+        if($userlevel != null):
+          $listUsersEmails[] = $user->user_email;
+        endif;        
       endforeach;
     endif;
     
