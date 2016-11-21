@@ -6,7 +6,7 @@ class Ydcomptepro {
   
   public function __construct() {
     
-    //IT'S FOR ALERTS USERS////////////
+    //IT'S FOR ALERTS USERS///////////////////////////////////////////////////
     //to save alerts for user
     /** include script and css files * */    
     add_action('wp_enqueue_scripts', array($this, 'alertsuser_scripts'));
@@ -19,10 +19,10 @@ class Ydcomptepro {
     
     add_action('wp_ajax_deletealertforuser', array($this, 'deletealertforuser'));
     add_action('wp_ajax_nopriv_deletealertforuser', array($this, 'deletealertforuser'));
-    //get alerts
+    //get alerts for post
     add_action('transition_post_status', array($this,'post_published_alertsender'), 10, 3 );
     
-    //PRO CODE/////////////////
+    //PRO CODE////////////////////////////////////////////////////////////////
     add_action('wp_enqueue_scripts', array($this, 'subuser_scripts'));
     
     //special hook only for promembership cancel master account
@@ -150,6 +150,10 @@ class Ydcomptepro {
       return;
     }
     
+    if (get_post_type($post_id) !== 'evenement' && get_post_type($post_id) !== 'post') :
+      return;
+    endif;
+        
      //same status do not do mail
     if($new_status == $old_status):
       return;
