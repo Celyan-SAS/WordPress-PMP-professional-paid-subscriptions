@@ -308,11 +308,11 @@ class Ydcomptepro {
     $data['name__like'] = $theseach;
     $data['fields'] = 'id=>name';
 
-//    $data['taxonomy'] = 'category';
-//    $categoryTerms = get_terms($data);
-//
-//    $data['taxonomy'] = 'ville';
-//    $villeTerms = get_terms($data);
+    $data['taxonomy'] = 'category';
+    $categoryTerms = get_terms($data);
+
+    $data['taxonomy'] = 'ville';
+    $villeTerms = get_terms($data);
 
     $data['number'] = 10;
     $data['orderby'] = 'count';
