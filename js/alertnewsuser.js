@@ -1,7 +1,7 @@
 /** CODE FOR alerts user autocomplete field **/
 (function ($, root, undefined) {
   var urlAgenda = window.location.href;
-  if(urlAgenda.indexOf('/login')>-1){
+  if(urlAgenda.indexOf('/dashboard-pro')>-1){
     
     var maximumItems = 3;
     var numberOfItems = 0;
