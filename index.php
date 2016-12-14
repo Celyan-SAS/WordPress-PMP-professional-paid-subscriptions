@@ -1,11 +1,11 @@
 <?php
 /**
- *	@package YD compte pro
+ *	@package PMP professional paid subscription
  *	@author Celyan
  *	@version 0.0.1
  */
 /*
- Plugin Name: YD Compte Pro
+ Plugin Name: PMP professional paid subscription
  Plugin URI: http://www.yann.com/
  Description: Gestions des infos compte pro
  Version: 0.0.1
