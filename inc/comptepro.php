@@ -219,6 +219,8 @@ class Ydcomptepro {
         $loginpage = 118153; //dev
       endif;
       $titleText = get_field('titre_mail_pour_alert',$loginpage);
+      $titleTextmodified = str_replace("%title%", get_the_title($post->ID), $titleText);
+      
       $coreText = get_field('texte_mail_pour_alert',$loginpage);
             
       global $newsletterData;
@@ -242,7 +244,7 @@ class Ydcomptepro {
         endif;
         
         // send email
-        wp_mail($emailTo, $titleText, $coreTextModified,$headers);  
+        wp_mail($emailTo, $titleTextmodified, $coreTextModified,$headers);  
       endforeach;
       
       add_filter('mandrill_nl2br', array($this,'post_published_alertsender_mandrill_off'));
