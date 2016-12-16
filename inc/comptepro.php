@@ -264,7 +264,7 @@ class Ydcomptepro {
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'jquery-ui-autocomplete' );
   
-    wp_enqueue_script('alertuser', plugins_url('/js/alertnewsuser.js', dirname(__FILE__)), array(), '1.1.0', false);
+    wp_enqueue_script('alertuser', plugins_url('/js/alertnewsuser.js', dirname(__FILE__)), array(), '1.2.0', false);
     wp_localize_script( 'alertuser', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' )) );
   }
   
