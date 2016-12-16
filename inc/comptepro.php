@@ -211,7 +211,7 @@ class Ydcomptepro {
         endif;        
       endforeach;
     endif;
-    
+        
     if(count($listUsersEmails)>0):
       //get textes
       $loginpage = 118477; //login page id
