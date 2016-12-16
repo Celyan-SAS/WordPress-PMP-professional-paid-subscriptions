@@ -44,6 +44,7 @@
             };
             $.post(ajax_object.ajax_url, data, function(theajaxresponse) {
               //console.log("saved");
+              window.location.reload();
             })
           .fail(function() {
             console.log( "error javascript inputAlertAutocomplete" );
@@ -91,6 +92,7 @@
             };
             $.post(ajax_object.ajax_url, data, function(theajaxresponse) {
               //console.log("deleted");
+              window.location.reload();
             })
           .fail(function() {
             console.log( "error javascript inputAlertAutocomplete" );
