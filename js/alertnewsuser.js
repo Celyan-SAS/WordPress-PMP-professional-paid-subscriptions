@@ -1,7 +1,13 @@
 /** CODE FOR alerts user autocomplete field **/
 (function ($, root, undefined) {
   var urlAgenda = window.location.href;
-  if(urlAgenda.indexOf('/dashboard-pro')>-1){
+  
+  //TEMP
+  console.log("temporaire pour faire fonctionner sur les 2 pages pro mais dois etre viré pour seulement fonctionner dans la page alertes");
+  //la bonne : if(urlAgenda.indexOf('dashboard-pro-alertes')>-1){
+  //la temp if(urlAgenda.indexOf('dashboard-pro')>-1){
+  
+  if(urlAgenda.indexOf('dashboard-pro')>-1){
     
     var maximumItems = 3;
     var numberOfItems = 0;
