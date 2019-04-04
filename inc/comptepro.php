@@ -103,12 +103,22 @@ class Ydcomptepro {
 									$html.= $people->user_nicename;
 								$html.= '</a>';								
 							$html.= '</td>';
-							$html.= '<td>';
+							$html.= '<td style="min-width: 140px;">';
 								$html.= $people->user_email;
 							$html.= '</td>';
+							
+							$time_activated = get_field('link_id_morale_date',$people->ID);
+							if($time_activated){
+								$html.= '<td style="min-width: 140px;">';
+									$html.= date('d/m/Y',$time_activated);
+								$html.= '</td>';
+							}else{
+								$html.= '<td style="min-width: 140px;">';
+									$html.= 'activé avant le 04/04/2019';
+								$html.= '</td>';
+							}
 						$html.= '</tr>';
 					}
-
 			$html.= '</table>';
 		}
 			
@@ -151,6 +161,7 @@ class Ydcomptepro {
 				pmpro_changeMembershipLevel(3, $user_id);
 				//need to save the id of morale account
 				update_user_meta($user_id, 'link_id_morale', $userMoralFound->ID);
+				update_user_meta($user_id, 'link_id_morale_date', time());
 			endif;
 
 		endif;
@@ -204,7 +215,7 @@ class Ydcomptepro {
 		header("Content-Type: application/json; charset=utf-8");
 
 		pmpro_changeMembershipLevel(0, $_POST['iduser']);
-		update_user_meta($_POST['iduser'], 'link_id_morale', 0);
+		update_user_meta($_POST['iduser'], 'link_id_morale', false);
 
 		//regenerate a new code when a user is kicked
 //		$codegenerated = "";
