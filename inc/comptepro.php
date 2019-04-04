@@ -43,6 +43,69 @@ class Ydcomptepro {
 			return;
 		}
 		add_filter('acf/load_value/name=code_generated', array($this, 'autoadd_code_generated'), 10, 3);
+		
+		add_action('add_meta_boxes', array($this, 'list_users_link_to_account_metabox'));
+	}
+
+	public function list_users_link_to_account_metabox() {
+		add_meta_box( 
+			'metabox_users_account_linked', 
+			'Liste des utilisateurs', 
+			array($this,'list_users_link_to_account'), 
+			'client_pro',
+			'advanced',
+			'high');
+	}
+	
+	public function list_users_link_to_account($post) {
+		
+		$master_account = get_field('master_account',$post->ID);
+		$comptepromodel_o = new Ydcomptepromodel();
+		$listPeople = $comptepromodel_o->getAllUsersSubAccounts($master_account['ID']);
+		
+		$nbr_users = 0;
+		if($listPeople){
+			$nbr_users = count($listPeople);
+		}
+		
+		$html = '';
+		$html.= '<div>';
+			$html.= "<div>"
+				. "<span>"
+				. "Nombre d'utilisateur : ".$nbr_users.""
+				. "</span>"
+				. "</div>";
+			$html.= "<div>"
+				. "<span>"
+				. "Compte maître : "
+				. "<a href='/wp-admin/user-edit.php?user_id=".$master_account['ID']."'>"
+				. "".$master_account['display_name'].""
+				. "</a>"
+				. "</span>"
+				. "</div>";
+			
+			if($listPeople){
+				$html.= '<table>';
+						foreach($listPeople as $people){
+							$html.= '<tr>';
+								/** line **/
+								$html.= '<td style="min-width: 140px;">';
+									$html.= '<a href="/wp-admin/user-edit.php?user_id='.$people->ID.'">';
+										$html.= $people->user_nicename;
+									$html.= '</a>';								
+								$html.= '</td>';
+								$html.= '<td>';
+									$html.= $people->user_email;
+								$html.= '</td>';
+							$html.= '</tr>';
+						}
+
+				$html.= '</table>';
+			}
+			
+		$html.= '</div>';
+		
+		echo $html;
 	}
 
 	public function autoadd_code_generated($value, $post_id, $field) {
