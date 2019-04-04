@@ -185,7 +185,7 @@ class Ydcomptepro {
 							$html.= $people->user_email;
 						$html.= '</td>';
 
-						$time_activated = get_field('link_id_morale_date',$people->ID);
+						$time_activated = get_field('link_id_morale_date','user_'.$people->ID);
 						if($time_activated){
 							$html.= '<td style="min-width: 140px;">';
 								$html.= date('d/m/Y',$time_activated);
