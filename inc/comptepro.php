@@ -61,7 +61,7 @@ class Ydcomptepro {
 		
 		$master_account = get_field('master_account',$post->ID);
 		if(!$master_account){
-			echo "Pas de compte maître.";
+			echo "Un compte maître dois être configuré.";
 			return;
 		}
 		
