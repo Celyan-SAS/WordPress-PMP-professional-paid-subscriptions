@@ -65,7 +65,12 @@ class Ydcomptepro {
 			
 			$listPayed_query = $comptepromodel_o->getAllAccountsPayed();
 			if(isset($listPayed_query->posts) && count($listPayed_query->posts)>0){
-				$nbr_comptes_souscripts = count($listPayed_query->posts);
+				foreach($listPayed_query->posts as $payed){
+					$nombre_de_sub_comptes = get_field('nombre_de_sub_comptes',$payed->ID);
+					if($nombre_de_sub_comptes){
+						$nbr_comptes_souscripts = $nbr_comptes_souscripts+intval($nombre_de_sub_comptes);
+					}
+				}
 			}			
 			
 			echo '<div style="  display: inline-block;position: absolute;left: 32%;">'
