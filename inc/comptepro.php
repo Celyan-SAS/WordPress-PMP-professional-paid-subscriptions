@@ -48,8 +48,38 @@ class Ydcomptepro {
 		
 		add_action ( 'manage_client_pro_posts_custom_column', array( $this, 'pmppro_admincolumn_changes' ), 10, 2 );
 		add_action ( 'manage_client_pro_posts_custom_column', array( $this, 'pmppro_admincolumn_changes_after' ), 1000, 2 );
+		
+		add_action( 'manage_posts_extra_tablenav', array( $this, 'register_pmppro_infos' ),100,1 );
 	}
-			 
+	
+	public function register_pmppro_infos($which){
+		if($which == 'top'){
+			$nbr_comptes_souscripts = 0;
+			$nbr_comptes_activés = 0;
+			
+			$comptepromodel_o = new Ydcomptepromodel();
+			$listPeople = $comptepromodel_o->getAllUsersSubAccounts_notnull();
+			if($listPeople){
+				$nbr_comptes_activés = count($listPeople);
+			}
+			
+			$listPayed_query = $comptepromodel_o->getAllAccountsPayed();
+			if(isset($listPayed_query->posts) && count($listPayed_query->posts)>0){
+				$nbr_comptes_souscripts = count($listPayed_query->posts);
+			}			
+			
+			echo '<div style="  display: inline-block;position: absolute;left: 44%;">'
+				. 'Nombre de comptes souscrits'
+				. '<br>'
+				. ''.$nbr_comptes_souscripts
+				. '</div>';
+			echo '<div style="  display: inline-block;position: absolute;left: 58%;">'
+				. 'Nombre de comptes activés'
+				. '<br>'
+				. ''.$nbr_comptes_activés
+				. '</div>';	
+		}
+	}
 		 
 	public function pmppro_admincolumn_changes($column, $post_id){
 				
