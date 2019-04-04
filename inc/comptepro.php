@@ -63,6 +63,12 @@ class Ydcomptepro {
 		$comptepromodel_o = new Ydcomptepromodel();
 		$listPeople = $comptepromodel_o->getAllUsersSubAccounts($master_account['ID']);
 		
+		if($_SERVER['REMOTE_ADDR'] == '176.159.13.228'){
+			echo "<pre>", print_r("TEST ID", 1), "</pre>";
+			echo "<pre>", print_r($master_account['ID'], 1), "</pre>";
+			echo "<pre>", print_r($master_account, 1), "</pre>";
+		}
+		
 		$nbr_users = 0;
 		if($listPeople){
 			$nbr_users = count($listPeople);
