@@ -53,6 +53,10 @@ class Ydcomptepro {
 		 
 	public function pmppro_admincolumn_changes($column, $post_id){
 				
+		if($_SERVER['REMOTE_ADDR'] == '176.159.13.228'){
+			echo $column;
+		}
+		
 //		if($column == '5ca621e074521'){ //total subs
 //		
 //			
