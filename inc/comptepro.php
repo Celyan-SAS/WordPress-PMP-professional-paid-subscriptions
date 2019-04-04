@@ -60,15 +60,14 @@ class Ydcomptepro {
 	public function list_users_link_to_account($post) {
 		
 		$master_account = get_field('master_account',$post->ID);
-		$comptepromodel_o = new Ydcomptepromodel();
-		$listPeople = $comptepromodel_o->getAllUsersSubAccounts($master_account['ID']);
-		
-		if($_SERVER['REMOTE_ADDR'] == '176.159.13.228'){
-			echo "<pre>", print_r("TEST ID", 1), "</pre>";
-			echo "<pre>", print_r($master_account['ID'], 1), "</pre>";
-			echo "<pre>", print_r($master_account, 1), "</pre>";
+		if(!$master_account){
+			echo "Pas de compte maître.";
+			return;
 		}
 		
+		$comptepromodel_o = new Ydcomptepromodel();
+		$listPeople = $comptepromodel_o->getAllUsersSubAccounts($master_account['ID']);
+				
 		$nbr_users = 0;
 		if($listPeople){
 			$nbr_users = count($listPeople);
