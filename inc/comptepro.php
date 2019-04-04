@@ -68,12 +68,12 @@ class Ydcomptepro {
 				$nbr_comptes_souscripts = count($listPayed_query->posts);
 			}			
 			
-			echo '<div style="  display: inline-block;position: absolute;left: 44%;">'
+			echo '<div style="  display: inline-block;position: absolute;left: 32%;">'
 				. 'Nombre de comptes souscrits'
 				. '<br>'
 				. ''.$nbr_comptes_souscripts
 				. '</div>';
-			echo '<div style="  display: inline-block;position: absolute;left: 58%;">'
+			echo '<div style="  display: inline-block;position: absolute;left: 46%;">'
 				. 'Nombre de comptes activés'
 				. '<br>'
 				. ''.$nbr_comptes_activés
