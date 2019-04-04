@@ -181,13 +181,7 @@ class Ydcomptepro {
 		}
 		
 		$html = '';
-		$html.= '<div>';
-			$html.= "<div>"
-				. "<span>"
-				. "Nombre d'utilisateur : ".$nbr_users.""
-				. "</span>"
-				. "</div>";
-			
+		
 		$master_account = get_field('master_account',$userMoralFound->ID);
 		if(!$master_account){
 			$html.= "<div>"
@@ -198,13 +192,20 @@ class Ydcomptepro {
 		}else{
 			$html.= "<div>"
 				. "<span>"
-				. "Compte maître : "
+				. "Utilisateur administrateur de ce compte : "
 				. "<a href='/wp-admin/user-edit.php?user_id=".$master_account['ID']."'>"
-				. "".$master_account['display_name'].""
+				. "".$master_account['display_name']." - ".$master_account['user_email'].""
 				. "</a>"
 				. "</span>"
 				. "</div>";
-		}		
+		}
+		
+		$html.= '<div>';
+		$html.= "<div>"
+			. "<span>"
+			. "Utilisateurs activés : ".$nbr_users.""
+			. "</span>"
+			. "</div>";		
 			
 		if($listPeople){
 			$html.= '<table>';
