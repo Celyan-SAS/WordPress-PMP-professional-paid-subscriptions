@@ -54,15 +54,15 @@ class Ydcomptepro {
 	public function pmppro_admincolumn_changes($column, $post_id){
 				
 		if($_SERVER['REMOTE_ADDR'] == '176.159.13.228'){
-			echo $column;
+			//echo $column;
 		}
 		
-//		if($column == '5ca621e074521'){ //total subs
+//		if($column == '5ca621e074521' || 5ca62c479b4303){ //total subs
 //		
 //			
 //		}
 		
-		if($column == '5ca621e074f16'){ //number actual subs		
+		if($column == '5ca621e074f16' || $column == '5ca62c479bc2f16'){ //number actual subs		
 			$comptepromodel_o = new Ydcomptepromodel();
 			$listPeople = $comptepromodel_o->getAllUsersSubAccounts($post_id);
 			if($listPeople){
@@ -72,7 +72,7 @@ class Ydcomptepro {
 			}
 		}
 		
-		if($column == '5ca621e075032'){ //date fin abonnement
+		if($column == '5ca621e075032' || $column == '5ca62c479bd50'){ //date fin abonnement
 			$date_field = get_field('date_de_fin_dabonnement',$post_id);
 			echo $date_field;
 		}		
@@ -81,6 +81,8 @@ class Ydcomptepro {
 		  //'5ca621e074521'=>1,
 		  '5ca621e074f16'=>1,
 		  '5ca621e075032'=>1,
+		  '5ca62c479bc2f16'=>1,
+		  '5ca62c479bd50'=>1,
 		  );
 		
 		if( 1 == $list[$column] ){
@@ -113,6 +115,8 @@ class Ydcomptepro {
 		  //'5ca621e074521'=>1,
 		  '5ca621e074f16'=>1,
 		  '5ca621e075032'=>1,
+		  '5ca62c479bc2f16'=>1,
+		  '5ca62c479bd50'=>1,
 		  );
 		
 		if( 1 == $list[$column] ){
