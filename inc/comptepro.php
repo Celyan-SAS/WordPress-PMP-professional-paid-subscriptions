@@ -45,7 +45,77 @@ class Ydcomptepro {
 		add_filter('acf/load_value/name=code_generated', array($this, 'autoadd_code_generated'), 10, 3);
 		
 		add_action('add_meta_boxes', array($this, 'list_users_link_to_account_metabox'));
+		
+		add_action ( 'manage_client_pro_posts_custom_column', array( $this, 'pmppro_admincolumn_changes' ), 10, 2 );
+		add_action ( 'manage_client_pro_posts_custom_column', array( $this, 'pmppro_admincolumn_changes_after' ), 1000, 2 );
 	}
+			 
+		 
+	public function pmppro_admincolumn_changes($column, $post_id){
+				
+//		if($column == '5ca621e074521'){ //total subs
+//		
+//			
+//		}
+		
+		if($column == '5ca621e074f16'){ //number actual subs		
+			$comptepromodel_o = new Ydcomptepromodel();
+			$listPeople = $comptepromodel_o->getAllUsersSubAccounts($post_id);
+			if($listPeople){
+				echo count($listPeople);
+			}else{
+				echo 0;
+			}
+		}
+		
+		if($column == '5ca621e075032'){ //date fin abonnement
+			$date_field = get_field('date_de_fin_dabonnement',$post_id);
+			echo $date_field;
+		}		
+		
+		$list = array(
+		  //'5ca621e074521'=>1,
+		  '5ca621e074f16'=>1,
+		  '5ca621e075032'=>1,
+		  );
+		
+		if( 1 == $list[$column] ){
+			/** masquer la valeur de base **/
+			echo '<span style="display:none;">';
+		}
+		
+		
+//		if( 'id_du_vol' == $column || '5c09187cf320a' == $column || '5c0a3d818d8c8' == $column  ) {
+//			$revervation_query = get_more_rescent_reservation_by_personid($post_id);
+//			if(isset($revervation_query->posts) && count($revervation_query->posts)>0){
+//				foreach($revervation_query->posts as $reservation){					
+//					$url = site_url().'/wp-admin/post.php?post='.$reservation->ID.'&amp;action=edit';
+//					$unique_id = get_field("unique_resa_id",$reservation->ID);
+//					if($unique_id){
+//						echo '<a href="'.$url.'">';
+//							echo $unique_id;
+//						echo '</a>';
+//					}
+//				}
+//			}
+//
+//			/** masquer la valeur de base **/
+//			echo '<span style="display:none;">';
+//		}
+	}
+	
+	public function pmppro_admincolumn_changes_after($column, $post_id){
+		$list = array(
+		  //'5ca621e074521'=>1,
+		  '5ca621e074f16'=>1,
+		  '5ca621e075032'=>1,
+		  );
+		
+		if( 1 == $list[$column] ){
+			echo '</span>';
+		}
+	}
+
 
 	public function list_users_link_to_account_metabox() {
 		add_meta_box( 
