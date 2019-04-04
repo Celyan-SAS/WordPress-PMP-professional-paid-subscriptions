@@ -79,7 +79,7 @@ class Ydcomptepro {
 		if(!$master_account){
 			$html.= "<div>"
 				. "<span>"
-				. "Pas de compte maître trouvé."
+				. "Aucun utilisateur ayant le privilège d'administration pour ce compte."
 				. "</span>"
 				. "</div>";
 		}else{
