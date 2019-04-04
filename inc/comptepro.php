@@ -62,7 +62,7 @@ class Ydcomptepro {
 //			
 //		}
 		
-		if($column == '5ca621e074f16' || $column == '5ca62c479bc2f16'){ //number actual subs		
+		if($column == '5ca621e074f16' || $column == '5ca62c479bc2f'){ //number actual subs		
 			$comptepromodel_o = new Ydcomptepromodel();
 			$listPeople = $comptepromodel_o->getAllUsersSubAccounts($post_id);
 			if($listPeople){
