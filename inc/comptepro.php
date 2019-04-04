@@ -95,30 +95,30 @@ class Ydcomptepro {
 			
 		if($listPeople){
 			$html.= '<table>';
-					foreach($listPeople as $people){
-						$html.= '<tr>';
-							/** line **/
+				foreach($listPeople as $people){
+					$html.= '<tr>';
+						/** line **/
+						$html.= '<td style="min-width: 140px;">';
+							$html.= '<a href="/wp-admin/user-edit.php?user_id='.$people->ID.'">';
+								$html.= $people->user_nicename;
+							$html.= '</a>';								
+						$html.= '</td>';
+						$html.= '<td style="min-width: 140px;">';
+							$html.= $people->user_email;
+						$html.= '</td>';
+
+						$time_activated = get_field('link_id_morale_date',$people->ID);
+						if($time_activated){
 							$html.= '<td style="min-width: 140px;">';
-								$html.= '<a href="/wp-admin/user-edit.php?user_id='.$people->ID.'">';
-									$html.= $people->user_nicename;
-								$html.= '</a>';								
+								$html.= date('d/m/Y',$time_activated);
 							$html.= '</td>';
+						}else{
 							$html.= '<td style="min-width: 140px;">';
-								$html.= $people->user_email;
+								$html.= 'activé avant le 04/04/2019';
 							$html.= '</td>';
-							
-							$time_activated = get_field('link_id_morale_date',$people->ID);
-							if($time_activated){
-								$html.= '<td style="min-width: 140px;">';
-									$html.= date('d/m/Y',$time_activated);
-								$html.= '</td>';
-							}else{
-								$html.= '<td style="min-width: 140px;">';
-									$html.= 'activé avant le 04/04/2019';
-								$html.= '</td>';
-							}
-						$html.= '</tr>';
-					}
+						}
+					$html.= '</tr>';
+				}
 			$html.= '</table>';
 		}
 			
