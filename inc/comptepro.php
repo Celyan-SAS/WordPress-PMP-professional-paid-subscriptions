@@ -57,16 +57,10 @@ class Ydcomptepro {
 			'high');
 	}
 	
-	public function list_users_link_to_account($post) {
-		
-		$master_account = get_field('master_account',$post->ID);
-		if(!$master_account){
-			echo "Un compte maître dois être configuré.";
-			return;
-		}
-		
+	public function list_users_link_to_account($userMoralFound) {
+				
 		$comptepromodel_o = new Ydcomptepromodel();
-		$listPeople = $comptepromodel_o->getAllUsersSubAccounts($master_account['ID']);
+		$listPeople = $comptepromodel_o->getAllUsersSubAccounts($userMoralFound->ID);
 				
 		$nbr_users = 0;
 		if($listPeople){
@@ -80,6 +74,15 @@ class Ydcomptepro {
 				. "Nombre d'utilisateur : ".$nbr_users.""
 				. "</span>"
 				. "</div>";
+			
+		$master_account = get_field('master_account',$userMoralFound->ID);
+		if(!$master_account){
+			$html.= "<div>"
+				. "<span>"
+				. "Pas de compte maître trouvé."
+				. "</span>"
+				. "</div>";
+		}else{
 			$html.= "<div>"
 				. "<span>"
 				. "Compte maître : "
@@ -88,25 +91,26 @@ class Ydcomptepro {
 				. "</a>"
 				. "</span>"
 				. "</div>";
+		}		
 			
-			if($listPeople){
-				$html.= '<table>';
-						foreach($listPeople as $people){
-							$html.= '<tr>';
-								/** line **/
-								$html.= '<td style="min-width: 140px;">';
-									$html.= '<a href="/wp-admin/user-edit.php?user_id='.$people->ID.'">';
-										$html.= $people->user_nicename;
-									$html.= '</a>';								
-								$html.= '</td>';
-								$html.= '<td>';
-									$html.= $people->user_email;
-								$html.= '</td>';
-							$html.= '</tr>';
-						}
+		if($listPeople){
+			$html.= '<table>';
+					foreach($listPeople as $people){
+						$html.= '<tr>';
+							/** line **/
+							$html.= '<td style="min-width: 140px;">';
+								$html.= '<a href="/wp-admin/user-edit.php?user_id='.$people->ID.'">';
+									$html.= $people->user_nicename;
+								$html.= '</a>';								
+							$html.= '</td>';
+							$html.= '<td>';
+								$html.= $people->user_email;
+							$html.= '</td>';
+						$html.= '</tr>';
+					}
 
-				$html.= '</table>';
-			}
+			$html.= '</table>';
+		}
 			
 		$html.= '</div>';
 		
