@@ -50,6 +50,15 @@ class Ydcomptepro {
 		add_action ( 'manage_client_pro_posts_custom_column', array( $this, 'pmppro_admincolumn_changes_after' ), 1000, 2 );
 		
 		add_action( 'manage_posts_extra_tablenav', array( $this, 'register_pmppro_infos' ),100,1 );
+		
+		add_action( 'acf/render_field', array($this,'pmppro_change_visual_acffields'), 10, 1 );
+	}
+	
+	public function pmppro_change_visual_acffields($field){
+		
+		if($field['key'] == 'field_5ca61b158cafb' && $field['type'] == 'url' && $field['value']!=''){
+			echo '<a href="'.$field['value'].'">Facture</a>';
+		}
 	}
 	
 	public function register_pmppro_infos($which){
