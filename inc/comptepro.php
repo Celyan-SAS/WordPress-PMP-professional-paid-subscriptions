@@ -56,7 +56,9 @@ class Ydcomptepro {
 	
 	public function pmppro_change_visual_acffields($field){
 		
-		if($field['key'] == 'field_5ca61b158cafb' && $field['type'] == 'url' && $field['value']!=''){
+		if(($field['key'] == 'field_5ca61b158cafb' || $field['key'] == 'field_5ca61bdfb1580')
+			&& $field['type'] == 'url' 
+			&& $field['value']!=''){
 			echo '<a href="'.$field['value'].'">Facture</a>';
 		}
 	}
