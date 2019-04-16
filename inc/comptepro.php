@@ -95,12 +95,12 @@ class Ydcomptepro {
 				}
 			}
 			
-			echo '<div style="  display: inline-block;position: absolute;left: 32%;">'
+			echo '<div style="  display: inline-block;left: 32%;">'
 				. 'Nombre de comptes souscrits : '
 				. '<br>'
 				. ''.$nbr_comptes_souscripts.' (dont '.$nbr_comptes_souscripts_payed.' payés)'
 				. '</div>';
-			echo '<div style="  display: inline-block;position: absolute;left: 46%;">'
+			echo '<div style="  display: inline-block;left: 46%;">'
 				. 'Nombre de comptes activés'
 				. '<br>'
 				. ''.$nbr_comptes_activés
