@@ -65,6 +65,7 @@ class Ydcomptepro {
 	
 	public function register_pmppro_infos($which){
 		if($which == 'top'){
+			$nbr_comptes_souscripts_payed = 0;
 			$nbr_comptes_souscripts = 0;
 			$nbr_comptes_activés = 0;
 			
@@ -79,15 +80,25 @@ class Ydcomptepro {
 				foreach($listPayed_query->posts as $payed){
 					$nombre_de_sub_comptes = get_field('nombre_de_sub_comptes',$payed->ID);
 					if($nombre_de_sub_comptes){
+						$nbr_comptes_souscripts_payed = $nbr_comptes_souscripts_payed+intval($nombre_de_sub_comptes);
+					}
+				}
+			}
+			
+			$listAll_query = $comptepromodel_o->getAllAccounts();
+			if(isset($listAll_query->posts) && count($listAll_query->posts)>0){
+				foreach($listAll_query->posts as $all){
+					$nombre_de_sub_comptes = get_field('nombre_de_sub_comptes',$all->ID);
+					if($nombre_de_sub_comptes){
 						$nbr_comptes_souscripts = $nbr_comptes_souscripts+intval($nombre_de_sub_comptes);
 					}
 				}
-			}			
+			}
 			
 			echo '<div style="  display: inline-block;position: absolute;left: 32%;">'
-				. 'Nombre de comptes souscrits'
+				. 'Nombre de comptes souscrits : '
 				. '<br>'
-				. ''.$nbr_comptes_souscripts
+				. ''.$nbr_comptes_souscripts.' (dont '.$nbr_comptes_souscripts_payed.' payés)'
 				. '</div>';
 			echo '<div style="  display: inline-block;position: absolute;left: 46%;">'
 				. 'Nombre de comptes activés'

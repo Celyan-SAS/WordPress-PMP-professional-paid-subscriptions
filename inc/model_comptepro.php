@@ -101,6 +101,15 @@ class Ydcomptepromodel {
 		return $query;
 	}
 		
+	public function getAllAccounts() {
+		$args = array();
+		$args['post_type'] = 'client_pro';
+		$args['post_status'] = 'publish';
+		$args['posts_per_page'] = -1;
+
+		$query = new WP_Query($args);
+		return $query;
+	}	
 }
 
 ?>
