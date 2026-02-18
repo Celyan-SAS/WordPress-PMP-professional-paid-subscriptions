@@ -6,7 +6,7 @@
     $(document).ready(function() {
             
       //delete an alert for user
-      $('.buttonkicksubuser').live( "click", function() {
+      $(document).on("click", '.buttonkicksubuser', function() {
         var iduser = $(this).attr('data_iduser');
         var idproaccount = $(this).attr('data_proaccount');
         //console.log("the user id"+iduser);
