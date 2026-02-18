@@ -416,7 +416,7 @@ class Ydcomptepro {
 
 		//get post_tag from post
 		$tagTerms = get_the_terms($post->ID, 'post_tag');
-		if (isset($tagTerms) && count($tagTerms) > 0):
+		if ( !empty( $tagTerms ) && is_array( $tagTerms ) && count( $tagTerms) > 0 ):
 			foreach ($tagTerms as $term):
 				$listRegex[] = $term->name;
 			endforeach;
