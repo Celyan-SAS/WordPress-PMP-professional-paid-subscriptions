@@ -369,7 +369,7 @@ class Ydcomptepro {
 		wp_enqueue_script('jquery-ui-autocomplete');
 		//wp_register_style( 'jquery-ui-styles','http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' );
 
-		wp_enqueue_script('subuser', plugins_url('/js/subuser.js', dirname(__FILE__)), array(), '1.0.0', false);
+		wp_enqueue_script('subuser', plugins_url('/js/subuser.js', dirname(__FILE__)), array(), '1.0.01', false);
 		wp_localize_script('subuser', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
 	}
 
